@@ -1,0 +1,110 @@
+<?php
+// 今回の結果
+$composite_key = array('user_id' => $USER->id, 'infosysselfesteem_id' => $infosysselfesteem->id);
+$records = $DB->get_record('infosysselfesteem_rubric', $composite_key);
+
+// 前回の結果
+$previous_records = $DB->get_records_sql(
+	'SELECT * from {infosysselfesteem_rubric} 
+	WHERE user_id = ? 
+	AND infosysselfesteem_id = (select id from {infosysselfesteem} WHERE id < ? LIMIT 1);',
+	array($USER->id, $infosysselfesteem->id));
+foreach ($previous_records as $previous_record) {}
+$last_time_span='<span class="last-time">前回</span>';
+
+// 全体の平均
+$overall_records = $DB->get_records_sql(
+	'SELECT TRUNCATE(AVG(rubric_1)+0.5, 0) rubric_1_avg, TRUNCATE(AVG(rubric_2)+0.5, 0) rubric_2_avg, TRUNCATE(AVG(rubric_3)+0.5, 0) rubric_3_avg, TRUNCATE(AVG(rubric_4)+0.5, 0) rubric_4_avg, 
+	TRUNCATE(AVG(rubric_5)+0.5, 0) rubric_5_avg, TRUNCATE(AVG(rubric_6)+0.5, 0) rubric_6_avg, TRUNCATE(AVG(rubric_7)+0.5, 0) rubric_7_avg, TRUNCATE(AVG(rubric_8)+0.5, 0) rubric_8_avg
+	from {infosysselfesteem_rubric} where infosysselfesteem_id = ?', array($infosysselfesteem->id));
+foreach ($overall_records as $overall_record) {}
+$overall_span='<span class="overall">全体</span>';
+
+
+
+?>
+
+<link rel="stylesheet" type="text/css" href="./style.css">
+
+今回のあなたの結果→<span class="this-time">&emsp;&emsp;</span>
+前回のあなたの結果→<span class="last-time">前回</span>
+全体の平均結果→<span class="overall">全体</span>
+
+<?php for ($i=1; $i < 8; $i++) :?>
+<div class="heading"><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></div>
+	<table class="table table-bordered">
+		<tbody>
+			<tr>
+				<th style="text-align:center" rowspan="2" width="10%">基準</th>
+				<th style="text-align:center" width="30%">低</th>
+				<th style="text-align:center" width="30%">中</th>
+				<th style="text-align:center" width="30%">高</th>
+			</tr>
+			<tr>
+				<?php
+				for ($j=0; $j < 3; $j++) :
+					echo "<td";
+					if ($records->{"rubric_{$i}"} === "{$j}") { echo " class='this-time'";}
+					echo ">";
+					echo get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem');
+					echo "</td>";
+				endfor;
+				?>
+			</tr>
+			<tr>
+				<th>前回・全体</th>
+				<?php
+				for ($j=0; $j < 3; $j++) : 
+					echo "<td>";
+					if ($previous_record->{"rubric_{$i}"} === "{$j}") { echo $last_time_span; }
+					if ($overall_record->{"rubric_{$i}_avg"} === "{$j}") { echo $overall_span; }
+					echo "</td>";
+				endfor;
+				?>
+			</tr>
+			<tr>
+				<th>関連する能力</th>
+				<td colspan="3"><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
+			</tr>
+		</tbody>
+	</table>
+<?php endfor; ?>
+
+<div class="heading"><?php echo get_string('rubric[8]', 'infosysselfesteem')?></div>
+	<table class="table table-bordered">
+		<tbody>
+			<tr>
+				<th style="text-align:center" rowspan="2" width="12%">基準</th>
+				<th style="text-align:center" width="22%">低</th>
+				<th style="text-align:center" width="22%">中</th>
+				<th style="text-align:center" width="22%">高</th>
+				<th style="text-align:center" width="22%">高高</th>
+			</tr>
+			<tr>
+				<?php
+				for ($i=0; $i < 4; $i++) :
+					echo "<td";
+					if ($records->rubric_8 === "{$i}") { echo " class='this-time'";}
+					echo ">";
+					echo get_string("rubric[8]_score{$i}", 'infosysselfesteem');
+					echo "</td>";
+				endfor;
+				?>
+			</tr>
+			<tr>
+				<th>前回・全体</th>
+				<?php
+				for ($i=0; $i < 4; $i++) : 
+					echo "<td>";
+					if ($previous_record->rubric_8 === "{$i}") { echo $last_time_span; }
+					if ($overall_record->rubric_8_avg === "{$i}") { echo $overall_span; }
+					echo "</td>";
+				endfor;
+				?>
+			</tr>
+			<tr>
+				<th>関連する能力</th>
+				<td colspan="4"><?php echo get_string('rubric[8]_ability', 'infosysselfesteem')?></td>
+			</tr>
+		</tbody>
+	</table>
