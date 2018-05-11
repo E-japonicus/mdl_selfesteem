@@ -32,35 +32,35 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<td style="text-align:center" width="40%" rowspan="5"><canvas id="radar_test_1" width=“30” height=“30”></canvas></td>
-			<td style="text-align:center" width="10%"></td>
-			<th style="text-align:center" width="10%">今回の得点</th>
-			<th style="text-align:center" width="10%">前回の得点</th>
-			<th style="text-align:center" width="10%">全体の平均</th>
+			<td style="text-align:center;" width="40%" rowspan="5"><canvas id="radar_test_1" width=“30” height=“30”></canvas></td>
+			<td style="text-align:center;" width="10%"></td>
+			<th class="table-title" width="10%">今回の得点</th>
+			<th class="table-title" width="10%">前回の得点</th>
+			<th class="table-title" width="10%">全体の平均</th>
 		</tr>
 		<tr>
-			<th style="text-align:center">思考力</br>(満点10点)</th>
-			<td><?php echo $this_time_avg['think'] ?></td>
-			<td><?php echo $last_time_avg['think'] ?></td>
-			<td><?php echo $overall_avg['think'] ?></td>
+			<th class="table-title">思考力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $this_time_avg['think'] ?></td>
+			<td class="table-val"><?php echo $last_time_avg['think'] ?></td>
+			<td class="table-val"><?php echo $overall_avg['think'] ?></td>
 		</tr>
 		<tr>
-			<th style="text-align:center">判断力</br>(満点10点)</th>
-			<td><?php echo $this_time_avg['judge'] ?></td>
-			<td><?php echo $last_time_avg['judge'] ?></td>
-			<td><?php echo $overall_avg['judge'] ?></td>
+			<th class="table-title">判断力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $this_time_avg['judge'] ?></td>
+			<td class="table-val"><?php echo $last_time_avg['judge'] ?></td>
+			<td class="table-val"><?php echo $overall_avg['judge'] ?></td>
 		</tr>
 		<tr>
-			<th style="text-align:center">表現力</br>(満点10点)</th>
-			<td><?php echo $this_time_avg['expre'] ?></td>
-			<td><?php echo $last_time_avg['expre'] ?></td>
-			<td><?php echo $overall_avg['expre'] ?></td>
+			<th class="table-title">表現力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $this_time_avg['expre'] ?></td>
+			<td class="table-val"><?php echo $last_time_avg['expre'] ?></td>
+			<td class="table-val"><?php echo $overall_avg['expre'] ?></td>
 		</tr>
 		<tr>
-			<th style="text-align:center" >総点</br>(満点30点)</th>
-			<td><?php echo $this_time_avg['sum'] ?></td>
-			<td><?php echo $last_time_avg['sum'] ?></td>
-			<td><?php echo $overall_avg['sum'] ?></td>
+			<th class="table-title">総点</br>(満点30点)</th>
+			<td class="table-val"><?php echo $this_time_avg['sum'] ?></td>
+			<td class="table-val"><?php echo $last_time_avg['sum'] ?></td>
+			<td class="table-val"><?php echo $overall_avg['sum'] ?></td>
 		</tr>
 	</tbody>
 </table>
