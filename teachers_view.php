@@ -10,6 +10,15 @@ $records = $DB->get_records_sql(
 require_once("{$CFG->dirroot}/mod/infosysselfesteem/infosysselfesteem_form.php");
 $mform = new infosysselfesteem_form("{$CFG->wwwroot}/mod/infosysselfesteem/view.php?id={$cm->id}");
 
+// 全体の平均
+$overall_sql = 'SELECT AVG(rubric_1) as rubric_1, AVG(rubric_2) as rubric_2, AVG(rubric_3) as rubric_3, AVG(rubric_4) as rubric_4, 
+					AVG(rubric_5) as rubric_5, AVG(rubric_6) as rubric_6, AVG(rubric_7) as rubric_7, AVG(rubric_8) as rubric_8 FROM {infosysselfesteem_rubric} WHERE infosysselfesteem_id = ?';
+$overall_records = $DB->get_records_sql($overall_sql, array($infosysselfesteem->id));
+foreach ($overall_records as $overall_record) {}
+
+include './TJE_average.php';
+$overall_avg = tje_average($overall_record);
+
 $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 
 ?>
@@ -25,9 +34,36 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 </ul>
 
 <div class="tab-content">
-  
-
   <div id="charts" class="tab-pane fade in active">
+  <div>
+  <h1>レーダーチャート</h1>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td style="text-align:center;" width="40%" rowspan="5"><canvas id="graph_radar"></canvas></td>
+        <td style="text-align:center;" width="10%"></td>
+        <th class="table-title" width="10%">全体の平均</th>
+      </tr>
+      <tr>
+        <th class="table-title">思考力</br>(満点10点)</th>
+        <td class="table-val"><?php echo $overall_avg['think'] ?></td>
+      </tr>
+      <tr>
+        <th class="table-title">判断力</br>(満点10点)</th>
+        <td class="table-val"><?php echo $overall_avg['judge'] ?></td>
+      </tr>
+      <tr>
+        <th class="table-title">表現力</br>(満点10点)</th>
+        <td class="table-val"><?php echo $overall_avg['expre'] ?></td>
+      </tr>
+      <tr>
+        <th class="table-title">総点</br>(満点30点)</th>
+        <td class="table-val"><?php echo $overall_avg['sum'] ?></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
   <?php for ($i=1; $i < 9; $i++) :?>
   <div class="heading"><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></div>
 
@@ -106,6 +142,9 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 
 <?php endfor;?>
 
+<!-- レーダーチャートの読み込み -->
+<?php include_once './create_radar_teacher.php' ?>
+<!-- 円グラフの読み込み -->
 <?php include_once './create_pie_chart.php' ?>
   
   

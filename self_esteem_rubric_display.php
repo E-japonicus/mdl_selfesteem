@@ -11,7 +11,7 @@ foreach ($last_records as $last_record) {}
 // 全体の平均
 $overall_sql = 'SELECT AVG(rubric_1) as rubric_1, AVG(rubric_2) as rubric_2, AVG(rubric_3) as rubric_3, AVG(rubric_4) as rubric_4, 
 					AVG(rubric_5) as rubric_5, AVG(rubric_6) as rubric_6, AVG(rubric_7) as rubric_7, AVG(rubric_8) as rubric_8 FROM {infosysselfesteem_rubric} WHERE infosysselfesteem_id = ?';
-$overall_records = $DB->get_records_sql($overall_sql, array($infosysselfesteem->times));
+$overall_records = $DB->get_records_sql($overall_sql, array($infosysselfesteem->id));
 foreach ($overall_records as $overall_record) {}
 
 include './TJE_average.php';
@@ -32,7 +32,7 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<td style="text-align:center;" width="40%" rowspan="5"><canvas id="radar_test_1" width=“30” height=“30”></canvas></td>
+			<td style="text-align:center;" width="40%" rowspan="5"><canvas id="graph_radar" width=“30” height=“30”></canvas></td>
 			<td style="text-align:center;" width="10%"></td>
 			<th class="table-title" width="10%">今回の得点</th>
 			<th class="table-title" width="10%">前回の得点</th>
@@ -64,7 +64,6 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 		</tr>
 	</tbody>
 </table>
-
 </div>
 
 <h1>あなたの結果と全体の傾向</h1>

@@ -12,24 +12,12 @@ var color = Chart.helpers.color;
 
 
 var ctx = document.getElementById("graph_radar").getContext('2d');
-ctx.canvas.width = 180;
+ctx.canvas.width = 200;
 var myChart = new Chart(ctx, {
     type: 'radar',
     data: {
         labels: ['思考力', '判断力', '表現力'],
         datasets: [{
-			label: "今回の結果",
-			backgroundColor: color(colorSet.red).alpha(0).rgbString(),
-			borderColor: colorSet.red,
-			pointBackgroundColor: colorSet.red,
-			data: <?php echo $this_time_avg['data_label'] ?>
-		},{
-            label: "前回の結果",
-			backgroundColor: color(colorSet.yellow).alpha(0).rgbString(),
-			borderColor: colorSet.yellow,
-			pointBackgroundColor: colorSet.yellow,
-			data: <?php echo $last_time_avg['data_label'] ?>
-        },{
             label: "全体の平均",
 			backgroundColor: color(colorSet.green).alpha(0).rgbString(),
 			borderColor: colorSet.green,
