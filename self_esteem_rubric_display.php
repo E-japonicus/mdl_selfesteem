@@ -19,7 +19,7 @@ $this_time_avg = tje_average($this_records);
 $last_time_avg = tje_average($last_record);
 $overall_avg = tje_average($overall_record);
 
-$rank = array("レベル１", "レベル２", "レベル３", "レベル４");
+$rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 
 ?>
 
@@ -67,110 +67,50 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
 </div>
 
 <h1>あなたの結果と全体の傾向</h1>
-
+<div style="padding: 20px 0px;">
 今回のあなたの結果→<span class="this-time">&emsp;&emsp;</span>
 前回のあなたの結果→<span class="last-time">前回</span>
+</div>
 
-<?php for ($i=1; $i < 9; $i++) :?>
-<div class="heading"><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></div>
 
-	<?php if (!($i === 4 or $i === 6 or $i === 8 )) :?>
-	<table class="table table-bordered">
-		<tbody>
+
+<div>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th style="text-align:center" rowspan="2" width="15%">規準</th>
+			<th style="text-align:center" colspan="4">基準</th>
+			<th style="text-align:center" rowspan="2" width="25%">全体の傾向</th>
+		</tr>
+		<tr>
+			<th style="text-align:center" width="15%">レベル０</th>
+			<th style="text-align:center" width="15%">レベル１</th>
+			<th style="text-align:center" width="15%">レベル２</th>
+			<th style="text-align:center" width="15%">レベル３</th>
+		</tr>
+		<?php for ($i=1; $i < 9; $i++): ?>
 			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center" width="10%">前回のあなたの結果</th>
-				<th style="text-align:center">全体の傾向</th>
-			</tr>
+				<th><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></th>
+				<?php for ($j=0; $j < 4; $j++) : ?>
+				<!-- ルーブリックの取得 -->
+				<?php ${"dis_rubric_".$j} = (get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem') === '') ? '' : get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem') ?>
+				<!-- 今回の結果のセルの色を変える -->
+				<?php $this_time_class = ($this_records->{"rubric_{$i}"} === "{$j}") ? 'this-time' : '' ?>
+				<!-- 前回の結果のspanを表示 -->
+				<?php $last_time_html =  ($last_record->{"rubric_{$i}"} === "{$j}") ? '</br></br><span class="last-time">前回の結果</span>' : '' ?>
 
-			<?php for ($j=0; $j < 3; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j] ?></th>
-					<td <?php if ($this_records->{"rubric_{$i}"} === "{$j}") { echo " class='this-time'";}?>>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php
-						if ($last_record->{"rubric_{$i}"} === "{$j}") {
-							echo '<td class="last-time">前回の結果</td>';
-						} else {
-							echo '<td></td>';
-						}
-					?>
-					<?php if ($j === 0) { echo "<td rowspan='4'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td colspan="2"><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
+				<td class=<?php echo $this_time_class ?>>
+					<?php echo ${"dis_rubric_".$j} ?>
+					<?php echo $last_time_html ?>
+				</td>
+				<?php endfor; ?>
+				<!-- グラフの描写 -->
+				<td><?php echo "<canvas height='180' id='rubric_graph_{$i}'></canvas>"?></td>
 			</tr>
-		</tbody>
-	</table>
-
-	<?php elseif($i === 6):?>
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center" width="10%">前回のあなたの結果</th>
-				<th style="text-align:center">全体の傾向</th>
-			</tr>
-
-			<?php for ($j=1; $j < 4; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j-1] ?></th>
-					<td <?php if ($this_records->{"rubric_{$i}"} === "{$j}") { echo " class='this-time'";}?>>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php
-						if ($last_record->{"rubric_{$i}"} === "{$j}") {
-							echo '<td class="last-time">前回の結果</td>';
-						} else {
-							echo '<td></td>';
-						}
-					?>
-					<?php if ($j === 1) { echo "<td rowspan='4'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td colspan="2"><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
-			</tr>
-		</tbody>
-	</table>
-
-	<?php elseif($i === 4 or $i === 8):?>
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center" width="10%">前回のあなたの結果</th>
-				<th style="text-align:center">全体の傾向</th>
-			</tr>
-
-			<?php for ($j=0; $j < 4; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j] ?></th>
-					<td <?php if ($this_records->{"rubric_{$i}"} === "{$j}") { echo " class='this-time'";}?>>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php
-						if ($last_record->{"rubric_{$i}"} === "{$j}") {
-							echo '<td class="last-time">前回の結果</td>';
-						} else {
-							echo '<td></td>';
-						}
-					?>
-					<?php if ($j === 0) { echo "<td rowspan='5'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td colspan="2"><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
-			</tr>
-		</tbody>
-	</table>
-	<?php endif; ?>
-<?php endfor;?>
+		<?php endfor; ?>
+	</tbody>
+</table>
+</div>
 
 <!-- レーダーチャートの読み込み -->
 <?php include_once './create_radar_chart.php' ?>
