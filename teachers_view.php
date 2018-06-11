@@ -64,7 +64,7 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
   </table>
   </div>
 
-  <?php for ($i=1; $i < 9; $i++) :?>
+  <?php for ($i=1; $i <= 11; $i++) :?>
   <div class="heading"><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></div>
 
 	<?php if (!($i === 4 or $i === 6 or $i === 8 )) :?>

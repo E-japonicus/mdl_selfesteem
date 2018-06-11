@@ -150,6 +150,52 @@ function xmldb_infosysselfesteem_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2007040200, 'infosysselfesteem');
     }
 
+    if ($oldversion < 2018061102) {
+
+        // Define field rubric_9 to be added to infosysselfesteem_rubric.
+        $table = new xmldb_table('infosysselfesteem_rubric');
+        $field = new xmldb_field('rubric_9', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_8');
+
+        // Conditionally launch add field rubric_9.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018061102, 'infosysselfesteem');
+    }
+
+    if ($oldversion < 2018061105) {
+
+        // Define field rubric_10 to be added to infosysselfesteem_rubric.
+        $table = new xmldb_table('infosysselfesteem_rubric');
+        $field = new xmldb_field('rubric_10', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_9');
+
+        // Conditionally launch add field rubric_10.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018061105, 'infosysselfesteem');
+    }
+
+    if ($oldversion < 2018061106) {
+
+        // Define field rubric_11 to be added to infosysselfesteem_rubric.
+        $table = new xmldb_table('infosysselfesteem_rubric');
+        $field = new xmldb_field('rubric_11', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'rubric_10');
+
+        // Conditionally launch add field rubric_11.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018061106, 'infosysselfesteem');
+    }
+
+
  
 
 

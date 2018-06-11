@@ -112,3 +112,30 @@ $string['rubric[8]_score1'] = '相互評価の結果と自分の予測とのキ�
 $string['rubric[8]_score2'] = '相互評価の結果と自分の予測とのギャップを感じ、次回の作問における出題内容の<span class="highlight">見直しや難易度の調整を行うことができそうだ</span>';
 $string['rubric[8]_score3'] = '今回の相互評価の結果と<span class="highlight">自分の予測とのギャップはなく、</span>次回の作問における出題内容の<span class="highlight">見直しや 難易度の調整も行うことができそうだ</span>';
 $string['rubric[8]_ability'] = '判断力：問題難易度の基準調整';
+
+$string['rubric[9]']        = '誤字脱字や分かりづらい表現のない問題を作成することができる';
+$string['rubric[9]_help']   = '';
+$string['rubric[9]_suffix'] = '作成された問題に';
+$string['rubric[9]_score0'] = '<span class="highlight">誤字脱字があり、適切でない単語表現や曖昧で分かりにくい表現</span>が含まれていた';
+$string['rubric[9]_score1'] = '誤字脱字はなかったが、<span class="highlight">文章が簡潔にまとめられていない箇所や分かりにくい表現</span>があった';
+$string['rubric[9]_score2'] = '誤字脱字がなく、<span class="highlight">誰にでも分かりやすい表現</span>で問題を作成することができた';
+$string['rubric[9]_score3'] = '';
+$string['rubric[9]_ability'] = '表現力：作問時における文法的表現';
+
+$string['rubric[10]']        = 'メンバーの一員としてグループセッションに参加することができ，自分の考えについて意見を述べることができる';
+$string['rubric[10]_help']   = '';
+$string['rubric[10]_suffix'] = '';
+$string['rubric[10]_score0'] = 'グループメンバーの問題にコメントを<span class="highlight">投稿しなかった</span>';
+$string['rubric[10]_score1'] = 'グループメンバーの問題にコメントを投稿したが、<span class="highlight">自分の意見や考えをうまく伝えることができなかった</span>';
+$string['rubric[10]_score2'] = 'グループメンバーの問題にコメントを投稿した際に、<span class="highlight">自分の意見や考えを誤解なくグループメンバーに伝えることができた</span>';
+$string['rubric[10]_score3'] = '';
+$string['rubric[10]_ability'] = '表現力：グループセッションにおける意思疎通、表現';
+
+$string['rubric[11]']        = '演習目標に則した問題の選択・決定ができる';
+$string['rubric[11]_help']   = '';
+$string['rubric[11]_suffix'] = '演習目標の出題分野と目標とする正答率の';
+$string['rubric[11]_score0'] = '<span class="highlight">どちらも満たしておらず</span>、問題の選択・決定を見直す必要がある';
+$string['rubric[11]_score1'] = '<span class="highlight">どちらか一方しか</span>満たしていない';
+$string['rubric[11]_score2'] = '<span class="highlight">どちらも満たした</span>問題を作成している';
+$string['rubric[11]_score3'] = '';
+$string['rubric[11]_ability'] = '判断力：最も演習目標に近いと思われる問題の選択・決定';

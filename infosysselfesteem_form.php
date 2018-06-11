@@ -24,6 +24,12 @@ class infosysselfesteem_form extends moodleform {
 
     $this->rubric_8_form();
 
+    $this->rubric_9_form();
+
+    $this->rubric_10_form();
+
+    $this->rubric_11_form();
+
     $mform->addElement('hidden', 'user_id', $USER->id);
     $mform->setType('user_id', PARAM_INT);
 
@@ -44,6 +50,7 @@ class infosysselfesteem_form extends moodleform {
     $radioarray[] = $mform->createElement('radio',  'rubric_1', '', get_string('rubric[1]_score0', 'infosysselfesteem'), 0,  $attributes);
     $radioarray[] = $mform->createElement('radio',  'rubric_1', '', get_string('rubric[1]_score1', 'infosysselfesteem'), 1,  $attributes);
     $radioarray[] = $mform->createElement('radio',  'rubric_1', '', get_string('rubric[1]_score2', 'infosysselfesteem'), 2,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_1', '', get_string('rubric[1]_score3', 'infosysselfesteem'), 3,  $attributes);
     $mform->addGroup($radioarray, 'radioar', get_string('rubric[1]_suffix', 'infosysselfesteem'), array('<br />'), false);
     $mform->setType('rubric_1', PARAM_INT);
     
@@ -157,45 +164,52 @@ class infosysselfesteem_form extends moodleform {
     $mform->addGroup($radioarray, 'radioar', get_string('rubric[8]_suffix', 'infosysselfesteem'), array('<br />'), false);
     $mform->setType('rubric_8', PARAM_INT);
   }
+
+  private function rubric_9_form(){
+    $mform = $this->_form;
+
+    $mform->addElement('header', 'rubric_9_title', get_string('rubric[9]', 'infosysselfesteem'));
+    $mform->setExpanded('rubric_9_title');
+    $mform->addHelpButton('rubric_9_title', 'rubric[9]', 'infosysselfesteem');
+
+    $radioarray=array();
+    $radioarray[] = $mform->createElement('radio',  'rubric_9', '', get_string('rubric[9]_score0', 'infosysselfesteem'), 0,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_9', '', get_string('rubric[9]_score1', 'infosysselfesteem'), 1,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_9', '', get_string('rubric[9]_score2', 'infosysselfesteem'), 2,  $attributes);
+    $mform->addGroup($radioarray, 'radioar', get_string('rubric[9]_suffix', 'infosysselfesteem'), array('<br />'), false);
+    $mform->setType('rubric_9', PARAM_INT);
+  }
+
+  private function rubric_10_form(){
+    $mform = $this->_form;
+
+    $mform->addElement('header', 'rubric_10_title', get_string('rubric[10]', 'infosysselfesteem'));
+    $mform->setExpanded('rubric_10_title');
+    $mform->addHelpButton('rubric_10_title', 'rubric[10]', 'infosysselfesteem');
+
+    $radioarray=array();
+    $radioarray[] = $mform->createElement('radio',  'rubric_10', '', get_string('rubric[10]_score0', 'infosysselfesteem'), 0,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_10', '', get_string('rubric[10]_score1', 'infosysselfesteem'), 1,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_10', '', get_string('rubric[10]_score2', 'infosysselfesteem'), 2,  $attributes);
+    $mform->addGroup($radioarray, 'radioar', get_string('rubric[10]_suffix', 'infosysselfesteem'), array('<br />'), false);
+    $mform->setType('rubric_10', PARAM_INT);
+  }
+
+  private function rubric_11_form(){
+    $mform = $this->_form;
+
+    $mform->addElement('header', 'rubric_11_title', get_string('rubric[11]', 'infosysselfesteem'));
+    $mform->setExpanded('rubric_11_title');
+    $mform->addHelpButton('rubric_11_title', 'rubric[11]', 'infosysselfesteem');
+
+    $radioarray=array();
+    $radioarray[] = $mform->createElement('radio',  'rubric_11', '', get_string('rubric[11]_score0', 'infosysselfesteem'), 0,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_11', '', get_string('rubric[11]_score1', 'infosysselfesteem'), 1,  $attributes);
+    $radioarray[] = $mform->createElement('radio',  'rubric_11', '', get_string('rubric[11]_score2', 'infosysselfesteem'), 2,  $attributes);
+    $mform->addGroup($radioarray, 'radioar', get_string('rubric[11]_suffix', 'infosysselfesteem'), array('<br />'), false);
+    $mform->setType('rubric_11', PARAM_INT);
+  }
  
 }
 
 ?>
-
-<!-- <link rel="stylesheet" type="text/css" href="./style.css">
-
-<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th style="text-align:center" width="30%">低</th>
-				<th style="text-align:center" width="30%">中</th>
-				<th style="text-align:center" width="30%">高</th>
-      </tr>
-      
-			<tr>
-        <td>
-        <label>
-          <input type="radio" name="rubric_8" id="Sample2Flg1" value="1" />
-<label for="Sample2Flg1"><?php echo get_string("rubric[1]_score0", 'infosysselfesteem')?></label> 
-        </label>
-        </td>
-
-        <td>
-        <label>
-          <input type="radio" name="rubric_8" id="Sample2Flg2" value="1" />
-<label for="Sample2Flg2"><?php echo get_string("rubric[1]_score0", 'infosysselfesteem')?></label> 
-        </label>
-        </td>
-
-        
-        <td class="Sample2Flg3">
-        <label>
-          <input type="radio" name="rubric_8" id="Sample2Flg3" value="1" />
-          <?php echo get_string("rubric[1]_score0", 'infosysselfesteem')?>
-        </label>
-        </td>
-        
-
-			</tr>
-		</tbody>
-	</table> -->

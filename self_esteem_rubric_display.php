@@ -9,8 +9,8 @@ $last_records = $DB->get_records_sql($last_sql, array($USER->id, $infosysselfest
 foreach ($last_records as $last_record) {}
 
 // 全体の平均
-$overall_sql = 'SELECT AVG(rubric_1) as rubric_1, AVG(rubric_2) as rubric_2, AVG(rubric_3) as rubric_3, AVG(rubric_4) as rubric_4, 
-					AVG(rubric_5) as rubric_5, AVG(rubric_6) as rubric_6, AVG(rubric_7) as rubric_7, AVG(rubric_8) as rubric_8 FROM {infosysselfesteem_rubric} WHERE infosysselfesteem_id = ?';
+$overall_sql = 'SELECT AVG(rubric_1) as rubric_1, AVG(rubric_2) as rubric_2, AVG(rubric_3) as rubric_3, AVG(rubric_4) as rubric_4, AVG(rubric_5) as rubric_5, AVG(rubric_6) as rubric_6, 
+				AVG(rubric_7) as rubric_7, AVG(rubric_8) as rubric_8, AVG(rubric_9) as rubric_9, AVG(rubric_10) as rubric_10, AVG(rubric_11) as rubric_11 FROM {infosysselfesteem_rubric} WHERE infosysselfesteem_id = ?';
 $overall_records = $DB->get_records_sql($overall_sql, array($infosysselfesteem->id));
 foreach ($overall_records as $overall_record) {}
 
@@ -88,7 +88,7 @@ $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 			<th style="text-align:center" width="15%">レベル２</th>
 			<th style="text-align:center" width="15%">レベル３</th>
 		</tr>
-		<?php for ($i=1; $i < 9; $i++): ?>
+		<?php for ($i=1; $i <= 11 ; $i++): ?>
 			<tr>
 				<th><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></th>
 				<?php for ($j=0; $j < 4; $j++) : ?>
