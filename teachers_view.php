@@ -38,109 +38,63 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
   <div>
   <h1>レーダーチャート</h1>
   <table class="table table-bordered">
-    <tbody>
-      <tr>
-        <td style="text-align:center;" width="40%" rowspan="5"><canvas id="graph_radar"></canvas></td>
-        <td style="text-align:center;" width="10%"></td>
-        <th class="table-title" width="10%">全体の平均</th>
-      </tr>
-      <tr>
-        <th class="table-title">思考力</br>(満点10点)</th>
-        <td class="table-val"><?php echo $overall_avg['think'] ?></td>
-      </tr>
-      <tr>
-        <th class="table-title">判断力</br>(満点10点)</th>
-        <td class="table-val"><?php echo $overall_avg['judge'] ?></td>
-      </tr>
-      <tr>
-        <th class="table-title">表現力</br>(満点10点)</th>
-        <td class="table-val"><?php echo $overall_avg['expre'] ?></td>
-      </tr>
-      <tr>
-        <th class="table-title">総点</br>(満点30点)</th>
-        <td class="table-val"><?php echo $overall_avg['sum'] ?></td>
-      </tr>
-    </tbody>
+	<tbody>
+		<tr>
+			<td style="text-align:center;" width="40%" rowspan="5"><canvas id="graph_radar" width=“30” height=“30”></canvas></td>
+			<td style="text-align:center;" width="10%"></td>
+			<th class="table-title" width="10%">全体の平均</th>
+		</tr>
+		<tr>
+			<th class="table-title">思考力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $overall_avg['think'] ?></td>
+		</tr>
+		<tr>
+			<th class="table-title">判断力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $overall_avg['judge'] ?></td>
+		</tr>
+		<tr>
+			<th class="table-title">表現力</br>(満点10点)</th>
+			<td class="table-val"><?php echo $overall_avg['expre'] ?></td>
+		</tr>
+		<tr>
+			<th class="table-title">総点</br>(満点30点)</th>
+			<td class="table-val"><?php echo $overall_avg['sum'] ?></td>
+		</tr>
+  </tbody>
   </table>
   </div>
 
-  <?php for ($i=1; $i <= 11; $i++) :?>
-  <div class="heading"><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></div>
-
-	<?php if (!($i === 4 or $i === 6 or $i === 8 )) :?>
-	<table class="table table-bordered">
-		<tbody>
+<div>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th style="text-align:center" rowspan="2" width="15%">規準</th>
+			<th style="text-align:center" colspan="4">基準</th>
+			<th style="text-align:center" rowspan="2" width="25%">全体の傾向</th>
+		</tr>
+		<tr>
+			<th style="text-align:center" width="15%">レベル０</th>
+			<th style="text-align:center" width="15%">レベル１</th>
+			<th style="text-align:center" width="15%">レベル２</th>
+			<th style="text-align:center" width="15%">レベル３</th>
+		</tr>
+		<?php for ($i=1; $i <= 11 ; $i++): ?>
 			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center">全体の傾向</th>
+				<th><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></th>
+				<?php for ($j=0; $j < 4; $j++) : ?>
+				<!-- ルーブリックの取得 -->
+				<?php ${"dis_rubric_".$j} = (get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem') === '') ? '' : get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem') ?>
+				<td>
+					<?php echo ${"dis_rubric_".$j} ?>
+				</td>
+				<?php endfor; ?>
+				<!-- グラフの描写 -->
+				<td><?php echo "<canvas height='180' id='rubric_graph_{$i}'></canvas>"?></td>
 			</tr>
-
-			<?php for ($j=0; $j < 3; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j] ?></th>
-					<td>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php if ($j === 0) { echo "<td rowspan='4'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
-			</tr>
-		</tbody>
-	</table>
-
-	<?php elseif($i === 6):?>
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center">全体の傾向</th>
-			</tr>
-
-			<?php for ($j=1; $j < 4; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j-1] ?></th>
-					<td>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php if ($j === 1) { echo "<td rowspan='4'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
-			</tr>
-		</tbody>
-	</table>
-
-	<?php elseif($i === 4 or $i === 8):?>
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th style="text-align:center" width="60%" colspan="2">基準</th>
-				<th style="text-align:center">全体の傾向</th>
-			</tr>
-
-			<?php for ($j=0; $j < 4; $j++): ?>
-				<tr>
-					<th style="text-align:center" width="10%"><?php echo $rank[$j] ?></th>
-					<td>
-						<?php echo get_string("rubric[{$i}]_suffix", 'infosysselfesteem').get_string("rubric[{$i}]_score{$j}", 'infosysselfesteem')?>
-					</td>
-					<?php if ($j === 0) { echo "<td rowspan='5'><canvas id='rubric_graph_{$i}'></canvas></td>";}?>
-				</tr>
-			<?php endfor;?>
-			<tr>
-				<th style="text-align:center" width="10%">関連する能力</th>
-				<td><?php echo get_string("rubric[{$i}]_ability", 'infosysselfesteem')?></td>
-			</tr>
-		</tbody>
-	</table>
-	<?php endif; ?>
-
-<?php endfor;?>
+		<?php endfor; ?>
+	</tbody>
+</table>
+</div>
 
 <!-- レーダーチャートの読み込み -->
 <?php include_once './create_radar_teacher.php' ?>
@@ -162,14 +116,17 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
           <th>名前</th>
           <th>ユーザ名</th>
 
-          <th>ルーブリック[1]</th>
-          <th>ルーブリック[2]</th>
-          <th>ルーブリック[3]</th>
-          <th>ルーブリック[4]</th>
-          <th>ルーブリック[5]</th>
-          <th>ルーブリック[6]</th>
-          <th>ルーブリック[7]</th>
-          <th>ルーブリック[8]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[1]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[2]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[3]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[4]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[5]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[6]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[7]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[8]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[9]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[10]</th>
+          <th>ﾙｰﾌﾞﾘｯｸ[11]</th>
         </tr>
       </thead>
       <tbody>
@@ -179,44 +136,8 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
             <th><?php echo $record->username  ; ?></th>
 
             <?php
-            for ($i=1; $i < 9; $i++) {
-              if ($i === 6) {
-                switch ($record->{"rubric_{$i}"}) {
-                    case "1":
-                        echo "<th>低</th>";
-                    break;
-
-                    case "2":
-                        echo "<th>中</th>";
-                    break;
-
-                    case "3":
-                        echo "<th>高</th>";
-                    break;
-
-                    case "4":
-                        echo "<th>高高</th>";
-                    break;
-                }
-              } else {
-                switch ($record->{"rubric_{$i}"}) {
-                    case "0":
-                        echo "<th>低</th>";
-                    break;
-
-                    case "1":
-                        echo "<th>中</th>";
-                    break;
-
-                    case "2":
-                        echo "<th>高</th>";
-                    break;
-
-                    case "3":
-                        echo "<th>高高</th>";
-                    break;
-                }
-              }
+            for ($i=1; $i <= 11; $i++) {
+              echo "<th>".$record->{"rubric_{$i}"}."</th>";
             }
             ?>
           </tr>
