@@ -199,7 +199,7 @@ class infosysselfesteem_form extends moodleform {
     $mform = $this->_form;
 
     $mform->addElement('header', 'rubric_11_title', get_string('rubric[11]', 'infosysselfesteem'));
-    $mform->setExpanded('rubric_11_title');
+    // $mform->setExpanded('rubric_11_title');
     $mform->addHelpButton('rubric_11_title', 'rubric[11]', 'infosysselfesteem');
 
     $radioarray=array();
