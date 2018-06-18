@@ -68,13 +68,13 @@ $string['rubric[3]_score2'] = '<span class="highlight">今までの作問演�
 $string['rubric[3]_score3'] = '';
 $string['rubric[3]_ability'] = '思考力[推論,仮説]：知識や情報に基づく仮説の形成，<br />判断力：出題箇所の比較・決定';
 
-$string['rubric[4]']        = '良問としてグループの代表に選ばれ、良問の基準に適した問題を作ることができる';
+$string['rubric[4]']        = '良問の基準に適した問題を作ることができる';
 $string['rubric[4]_help']   = '';
 $string['rubric[4]_suffix'] = '';
-$string['rubric[4]_score0'] = '良問として<span class="highlight">グループの代表に選ばれなかった</span>';
-$string['rubric[4]_score1'] = '良問としてグループの代表に選ばれ、<span class="highlight">半分程度</span>の基準を満たした問題を作成できた';
-$string['rubric[4]_score2'] = '良問としてグループの代表に選ばれ、<span class="highlight">8割程度</span>の基準を満たした問題を作成できた';
-$string['rubric[4]_score3'] = '良問としてグループの代表に選ばれ、<span class="highlight">すべての基準</span>を満たした問題を作成できた';
+$string['rubric[4]_score0'] = '';
+$string['rubric[4]_score1'] = '<span class="highlight">半分程度</span>の基準を満たした問題を作成できた';
+$string['rubric[4]_score2'] = '<span class="highlight">8割程度</span>の基準を満たした問題を作成できた';
+$string['rubric[4]_score3'] = '<span class="highlight">すべての基準</span>を満たした問題を作成できた';
 $string['rubric[4]_ability'] = '思考力[推論,仮説]：結果の予測，<br />思考力[作問を通じた創造的思考力]：出題箇所の問題化，<br />判断力：作問に関する意思決定（出題形式の選択など），<br />表現力：作問時における文法的表現（記号や図表なども含む）';
 
 $string['rubric[5]']        = 'グループメンバーからの意見の活用';
