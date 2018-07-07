@@ -40,18 +40,39 @@ defined('MOODLE_INTERNAL') || die();
  function infosysselfesteem_rubric_upsert($input) {
      global $DB, $composite_key;
 
+    //  DBにデータがある時
      if ($record = $DB->get_record('infosysselfesteem_rubric', $composite_key)) {
          foreach ($input as $key => $value) {
              $record->key = $value;
          }
          $record->timemodified = time();
 
-         return $DB->updata_record('infosysselfesteem_rubric', $record);
+         return $DB->update_record('infosysselfesteem_rubric', $record);
 
      } else {
          $record = $input;
          $record->timecreated = time();
 
          return $DB->insert_record('infosysselfesteem_rubric', $record);
+     }
+ }
+
+ function infosysselfesteem_consider_upsert($input){
+     global $DB, $composite_key;
+
+     if ($record = $DB->get_record('infosysselfesteem_consider', $composite_key)) {
+         foreach ($input as $key => &$value) {
+             $record->$key = $value;
+         }
+         $record->timemodified = time();
+         unset($value);
+
+         return $DB->update_record('infosysselfesteem_consider', $record);
+
+     } else {
+         $record = $input;
+         $record->timecreated = time();
+
+         return $DB->insert_record('infosysselfesteem_consider', $record, false);
      }
  }

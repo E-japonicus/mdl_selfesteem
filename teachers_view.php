@@ -1,7 +1,14 @@
 <?php
-$records = $DB->get_records_sql(
+$rubric_records = $DB->get_records_sql(
     'SELECT A.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username
     from (select * from {infosysselfesteem_rubric} where infosysselfesteem_id = ?) A 
+    inner join {user} on A.user_id = {user}.id
+    order by A.user_id',
+    array($infosysselfesteem->id));
+
+$consider_records = $DB->get_records_sql(
+    'SELECT A.*, concat({user}.lastname, " ", {user}.firstname) name, {user}.username
+    from (select * from {infosysselfesteem_consider} where infosysselfesteem_id = ?) A 
     inner join {user} on A.user_id = {user}.id
     order by A.user_id',
     array($infosysselfesteem->id));
@@ -31,6 +38,7 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
   <li class="active"><a data-toggle="tab" href="#charts">全体の傾向</a></li>
   <li><a data-toggle="tab" href="#form">フォーム</a></li>
   <li><a data-toggle="tab" href="#list">ルーブリック登録一覧</a></li>
+  <li><a data-toggle="tab" href="#consider">自己評価が変化した理由一覧</a></li>
 </ul>
 
 <div class="tab-content">
@@ -109,7 +117,7 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
   </div>
 
   <div id="list" class="tab-pane fade">
-    <span><?php echo count($records); ?>件</span>
+    <span><?php echo count($rubric_records); ?>件</span>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -130,7 +138,7 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($records as $record): ?>
+        <?php foreach ($rubric_records as $record): ?>
           <tr>
             <th><?php echo $record->name      ; ?></th>
             <th><?php echo $record->username  ; ?></th>
@@ -145,5 +153,61 @@ $rank = array("レベル１", "レベル２", "レベル３", "レベル４");
       </tbody>
     </table>
   </div>
-</div>
 
+  <!-- <div id="consider" class="tab-pane fade">
+    <table class="table table-striped">
+      <?php var_dump($consider_records); ?>
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>ユーザ名</th>
+          <th>変化した理由</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($consider_records as $record): ?>
+          <tr>
+            <th><?php echo $record->name      ; ?></th>
+            <th><?php echo $record->username  ; ?></th>
+
+            <?php
+            for ($i=1; $i <= 11; $i++) {
+              echo "<th>".$record->{"rubric_{$i}"}."</th>";
+            }
+            ?>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+
+</div> -->
+
+<div id="consider" class="tab-pane fade">
+<?php foreach ($consider_records as $record): ?>
+<table class="table table-striped">
+	<tbody>
+		<tr>
+			<th>名前</th>
+			<td><?php echo $record->name; ?></td>
+		</tr>
+		<tr>
+			<th>ユーザー名</th>
+			<td><?php echo $record->username; ?></td>
+		</tr>
+      <?php 
+      for ($i= 1; $i < 12; $i++) :
+        if (isset($record->{"rubric_{$i}"})) :
+          echo "<tr>";
+          echo "<th>ルーブリック[".$i."]</th>";
+          echo "<td>".$record->{"rubric_{$i}"}."</td>";
+          echo "</tr>";
+        endif;
+      endfor;
+      ?>
+	</tbody>
+</table>
+<?php endforeach; ?>
+  </div>
+
+</div>

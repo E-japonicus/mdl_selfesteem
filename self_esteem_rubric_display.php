@@ -1,6 +1,32 @@
 <?php
-// 今回の結果
-$composite_key = array('user_id' => $USER->id, 'infosysselfesteem_id' => $infosysselfesteem->id);
+
+include_once './locallib.php';  /* DB */
+
+// submitボタンが押された時
+if (isset($_POST['submit'])) {
+	
+	// POSTされたデータの取り出し
+	foreach ($_POST as $name => $value) {
+		$$name = $value;
+	}
+
+	// POSTされたデータの格納
+	$record = new stdClass();
+	$record->user_id = $USER->id;
+	$record->infosysselfesteem_id = $infosysselfesteem->id;
+	for ($i=1; $i < 12; $i++) {
+		$record->{"rubric_{$i}"} = optional_param("rubric_{$i}", NULL, PARAM_TEXT);
+	}
+
+	if (infosysselfesteem_consider_upsert($record)) {
+		// success upsert
+	} else {
+		// failed
+    }	
+}
+
+// 今回の結果の読み込み
+global $composite_key;
 $this_records = $DB->get_record('infosysselfesteem_rubric', $composite_key);
 
 // 前回の結果
@@ -21,11 +47,20 @@ $overall_avg = tje_average($overall_record);
 
 $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 
+$consider_recoeds = $DB->get_record('infosysselfesteem_consider', $composite_key);
+$def_placeholder = "自己評価が変化した理由を記入してください";
+for ($i=1; $i < 12; $i++) { 
+	if (isset($consider_recoeds->{"rubric_{$i}"})) {
+		$def_placeholder = $consider_recoeds->{"rubric_{$i}"};
+	}
+}
 ?>
 
 <link rel="stylesheet" type="text/css" href="./style.css">
 <!-- グラフのライブラリの読み込み -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<!-- ページ遷移制限のためのjQueryの読み込み -->
+<script type="text/javascript" src="./javascript/jquery-3.3.1.min.js"></script>
 
 <div>
 <h1>レーダーチャート</h1>
@@ -75,10 +110,11 @@ $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 
 
 <div>
+<form name="rubric_consider" method="post" action="">
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th style="text-align:center" rowspan="2" width="15%">規準</th>
+			<th style="text-align:center" rowspan="2" colspan="2" width="15%">規準</th>
 			<th style="text-align:center" colspan="4">基準</th>
 			<th style="text-align:center" rowspan="2" width="25%">全体の傾向</th>
 		</tr>
@@ -90,6 +126,7 @@ $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 		</tr>
 		<?php for ($i=1; $i <= 11 ; $i++): ?>
 			<tr>
+				<th width="2%"><?php echo $i ?>
 				<th><?php echo get_string("rubric[{$i}]", 'infosysselfesteem')?></th>
 				<?php for ($j=0; $j < 4; $j++) : ?>
 				<!-- ルーブリックの取得 -->
@@ -107,9 +144,23 @@ $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 				<!-- グラフの描写 -->
 				<td><?php echo "<canvas height='180' id='rubric_graph_{$i}'></canvas>"?></td>
 			</tr>
+
+
+			<?php if (!($this_records->{"rubric_{$i}"} === $last_record->{"rubric_{$i}"} or $last_record->{"rubric_{$i}"} === NULL)) : ?>
+			<tr class="change_rubric">
+			<th colspan="2"><b>規準[<?php echo $i ?>]</b>の自己評価が変化した理由</th>
+				<td colspan="5">
+				<textarea name="<?php echo "rubric_{$i}"?>" rows="3" style="width:90%" placeholder="自己評価が変化した理由を記入してください" required><?php if (isset($consider_recoeds->{"rubric_{$i}"})) { echo $consider_recoeds->{"rubric_{$i}"}; } ?></textarea>
+				</td>
+			</tr>
+			<?php endif;?>
+			
 		<?php endfor; ?>
+		
 	</tbody>
 </table>
+<button class="submit_button" name="submit">変更を保存する</button>
+</form>
 </div>
 
 <!-- レーダーチャートの読み込み -->
@@ -117,3 +168,22 @@ $rank = array("レベル0", "レベル1", "レベル2", "レベル3");
 <!-- 円グラフの読み込み -->
 <?php include_once './create_pie_chart.php' ?>
 
+<!-- form入力途中のページ遷移を制限する -->
+<script>
+$(function(){
+var form_change_flg = false;
+	window.onbeforeunload = function(e) {
+		if (form_change_flg) {
+			e.returnValue = "入力画面を閉じようとしています。入力中の情報がありますがよろしいですか？";
+		}
+	}
+    //フォームの内容が変更されたらフラグを立てる
+    $("form textarea").change(function() {
+  		form_change_flg = true;
+  	});
+    // フォーム送信時はアラートOFF
+    $('form[name=rubric_consider]').submit(function(){
+        form_change_flg = false;
+    });
+});
+</script>

@@ -10,7 +10,7 @@ function tje_average($records){
     // TJEの値
     $think = round((array_sum($think_sum) * (10/17)), 1);
     $judge = round((array_sum($judge_sum) * (10/11)), 1);
-    $expre = round((array_sum($expre_sum) * (10/11)), 1);
+    $expre = round((array_sum($expre_sum) * (10/9)), 1);
 
     $tje_sum = $think + $judge + $expre;
 

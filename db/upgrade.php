@@ -195,9 +195,75 @@ function xmldb_infosysselfesteem_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2018061106, 'infosysselfesteem');
     }
 
+    if ($oldversion < 2018070203) {
+
+        // Define table infosysselfesteem_consider to be created.
+        $table = new xmldb_table('infosysselfesteem_consider');
+
+        // Adding fields to table infosysselfesteem_consider.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('infosysselfesteem_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('rubric_1', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_2', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_3', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_4', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_5', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_6', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_7', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_8', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_9', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_10', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('rubric_11', XMLDB_TYPE_TEXT, null, null, null, null, null);
+
+        // Adding keys to table infosysselfesteem_consider.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('user_id', XMLDB_KEY_FOREIGN, array('user_id'), 'user', array('id'));
+        $table->add_key('infosysselfesteem_id', XMLDB_KEY_FOREIGN, array('infosysselfesteem_id'), 'infosysselfesteem', array('id'));
+
+        // Conditionally launch create table for infosysselfesteem_consider.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018070203, 'infosysselfesteem');
+    }
+
+    if ($oldversion < 2018070205) {
+
+        // Define field timecreated to be added to infosysselfesteem_consider.
+        $table = new xmldb_table('infosysselfesteem_consider');
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'rubric_11');
+
+        // Conditionally launch add field timecreated.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018070205, 'infosysselfesteem');
+    }
+
+    if ($oldversion < 2018070206) {
+
+        // Define field timemodified to be added to infosysselfesteem_consider.
+        $table = new xmldb_table('infosysselfesteem_consider');
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
+
+        // Conditionally launch add field timemodified.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Infosysselfesteem savepoint reached.
+        upgrade_mod_savepoint(true, 2018070206, 'infosysselfesteem');
+    }
+
+
+
 
  
-
 
 
 

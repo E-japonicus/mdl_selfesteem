@@ -76,7 +76,7 @@ if ($infosysselfesteem->intro) {
     echo $OUTPUT->box(format_module_intro('infosysselfesteem', $infosysselfesteem, $cm->id), 'generalbox mod_introbox', 'infosysselfesteemintro');
 }
 
-include_once './locallib.php';  /* DB */
+include_once './locallib.php';  /* DB */ 
 
 $composite_key = array('user_id' => $USER->id, 'infosysselfesteem_id' => $infosysselfesteem->id);
 
