@@ -53,7 +53,7 @@ $string['good_quiz_help'] = '
 
 $string['exercise_goal_help'] = '
 ・行列の分野の問題を作成する<br>
-・正答率80％の難易度の問題を作成する';
+・正答率70％の難易度の問題を作成する';
 
 $string['rubric[1]']        = '作問課題に関連する単元や内容を列挙する';
 $string['rubric[1]_help']   = '';
