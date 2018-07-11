@@ -4,12 +4,10 @@ include_once './locallib.php';  /* DB */
 
 // submitボタンが押された時
 if (isset($_POST['submit'])) {
-	
 	// POSTされたデータの取り出し
 	foreach ($_POST as $name => $value) {
 		$$name = $value;
 	}
-
 	// POSTされたデータの格納
 	$record = new stdClass();
 	$record->user_id = $USER->id;
@@ -17,7 +15,7 @@ if (isset($_POST['submit'])) {
 	for ($i=1; $i < 12; $i++) {
 		$record->{"rubric_{$i}"} = optional_param("rubric_{$i}", NULL, PARAM_TEXT);
 	}
-
+	// POSTされたデータの登録
 	if (infosysselfesteem_consider_upsert($record)) {
 		// success upsert
 	} else {
