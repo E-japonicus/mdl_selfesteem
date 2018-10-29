@@ -28,8 +28,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_infosysselfesteem';
-$plugin->version = 2018091001;
-$plugin->release = 'v4.2';
+$plugin->version = 2018102901;
+$plugin->release = 'v4.3';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->cron = 0;

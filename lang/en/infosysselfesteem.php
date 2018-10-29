@@ -28,8 +28,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Selection of rubric';
-$string['modulenameplural'] = 'Selection of rubric';
+$string['modulename'] = 'Selection of rubric(~H30 First half)';
+$string['modulenameplural'] = 'Selection of rubric(~H30 First half)';
 $string['modulename_help'] = 'Use the infosysselfesteem module for... | The infosysselfesteem module allows...';
 $string['infosysselfesteem:addinstance'] = 'Add a new infosysselfesteem';
 $string['infosysselfesteem:submit'] = 'Submit infosysselfesteem';

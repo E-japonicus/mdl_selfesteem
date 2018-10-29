@@ -28,8 +28,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = '自己評価モジュール 旧ver';
-$string['modulenameplural'] = '自己評価モジュール';
+$string['modulename'] = '自己評価モジュール(~H30前期)';
+$string['modulenameplural'] = '自己評価モジュール(~H30前期)';
 $string['modulename_help'] = '学習者がルーブリックを基に自己評価を行うモジュールです。';
 $string['infosysselfesteem:addinstance'] = 'Add a new self esteem';
 $string['infosysselfesteem:submit'] = 'Submit self esteem';
